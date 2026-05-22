@@ -10,7 +10,6 @@
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icons/icon-192.png"/>
 <title>Football Predictor</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Oswald:wght@500;700&family=DM+Mono&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -21,88 +20,90 @@
   --sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sarabun',sans-serif;overflow:hidden}
-body{display:flex;flex-direction:column;max-width:480px;margin:0 auto}
+body{display:flex;flex-direction:column;max-width:480px;margin:0 auto;position:relative}
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
-/* header */
-#hdr{flex-shrink:0;padding:calc(var(--sat)+13px) 16px 13px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(8,12,20,.95);border-bottom:1px solid var(--border);z-index:20}
+/* ── header ── */
+#hdr{flex-shrink:0;padding:calc(var(--sat)+13px) 16px 13px;display:flex;align-items:center;
+  justify-content:space-between;background:rgba(8,12,20,.95);border-bottom:1px solid var(--border);z-index:20}
 .hlogo{display:flex;align-items:center;gap:10px}
-.hicon{width:36px;height:36px;border-radius:10px;
-  background:linear-gradient(135deg,var(--cyan),var(--violet));
+.hicon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--violet));
   display:flex;align-items:center;justify-content:center;font-size:19px}
 .htitle{font-family:'Oswald',sans-serif;font-size:20px;letter-spacing:2px;
-  background:linear-gradient(90deg,var(--cyan),var(--violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hdate{font-size:10px;color:var(--muted);margin-top:1px}
-.hout{background:none;border:1px solid var(--border);color:var(--muted);
-  font-size:11px;padding:4px 10px;border-radius:20px;cursor:pointer;
-  font-family:'Sarabun',sans-serif}
+.hbtns{display:flex;gap:6px;align-items:center}
+.hbtn{background:none;border:1px solid var(--border);color:var(--muted);font-size:10px;
+  padding:4px 9px;border-radius:20px;cursor:pointer;font-family:'Sarabun',sans-serif;transition:all .2s}
+.hbtn:active{border-color:var(--cyan);color:var(--cyan)}
 
-/* content */
+/* ── nav ── */
+#nav{flex-shrink:0;padding-bottom:var(--sab);background:rgba(8,12,20,.97);
+  border-top:1px solid var(--border);display:flex;z-index:20}
+.nb{flex:1;padding:10px 4px 8px;border:none;background:transparent;color:var(--muted);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:3px;font-family:'Sarabun',sans-serif;
+  font-size:9px;letter-spacing:.5px;transition:color .2s}
+.nb.on{color:var(--cyan)}
+.nicon{font-size:19px;line-height:1}
+.npip{width:16px;height:2px;border-radius:1px;background:var(--cyan);opacity:0;margin-top:1px;transition:opacity .2s}
+.nb.on .npip{opacity:1}
+
+/* ── content ── */
 #content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
 .page{padding:14px 14px 8px}
 
-/* nav */
-#nav{flex-shrink:0;padding-bottom:var(--sab);
-  background:rgba(8,12,20,.97);border-top:1px solid var(--border);display:flex}
-.nb{flex:1;padding:10px 4px 8px;border:none;background:transparent;
-  color:var(--muted);cursor:pointer;display:flex;flex-direction:column;
-  align-items:center;gap:3px;font-family:'Sarabun',sans-serif;font-size:9px;
-  letter-spacing:.5px;transition:color .2s}
-.nb.on{color:var(--cyan)}
-.nicon{font-size:19px;line-height:1}
-.npip{width:16px;height:2px;border-radius:1px;background:var(--cyan);
-  opacity:0;margin-top:1px;transition:opacity .2s}
-.nb.on .npip{opacity:1}
-
-/* login */
-#login{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;
+/* ── login ── */
+#loginScreen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;
   align-items:center;justify-content:center;padding:36px 26px;z-index:100}
 .lemoji{font-size:54px;margin-bottom:20px;animation:lp 3s ease-in-out infinite}
 @keyframes lp{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.ltitle{font-family:'Oswald',sans-serif;font-size:34px;letter-spacing:4px;text-align:center;
-  margin-bottom:5px;background:linear-gradient(90deg,var(--cyan),var(--violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.lsub{color:var(--muted);font-size:12px;text-align:center;margin-bottom:32px}
+.ltitle{font-family:'Oswald',sans-serif;font-size:34px;letter-spacing:4px;text-align:center;margin-bottom:5px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.lsub{color:var(--muted);font-size:12px;text-align:center;margin-bottom:30px}
 .lform{width:100%;display:flex;flex-direction:column;gap:10px}
-.finput{width:100%;padding:13px 14px 13px 40px;background:var(--card);
-  border:1px solid var(--border);border-radius:12px;color:var(--text);
-  font-family:'Sarabun',sans-serif;font-size:15px;outline:none}
-.finput:focus{border-color:rgba(34,211,238,.4)}
-.finput::placeholder{color:var(--muted)}
 .fwrap{position:relative}
 .ficon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.5}
+.finput{width:100%;padding:13px 14px 13px 40px;background:var(--card);border:1px solid var(--border);
+  border-radius:12px;color:var(--text);font-family:'Sarabun',sans-serif;font-size:15px;outline:none;transition:border-color .2s}
+.finput:focus{border-color:rgba(34,211,238,.4)}
+.finput::placeholder{color:var(--muted)}
 .lerr{color:var(--rose);font-size:12px;text-align:center;padding:8px;
   background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);border-radius:8px}
 .hidden{display:none!important}
 .btnp{padding:14px;border:none;border-radius:12px;cursor:pointer;
   background:linear-gradient(135deg,var(--cyan),var(--violet));
-  color:#080c14;font-family:'Oswald',sans-serif;font-size:17px;letter-spacing:2px}
-.btng{padding:12px;border:1px solid var(--border);border-radius:12px;
-  background:transparent;color:var(--muted);font-family:'Sarabun',sans-serif;
-  font-size:13px;cursor:pointer}
+  color:#080c14;font-family:'Oswald',sans-serif;font-size:17px;letter-spacing:2px;transition:opacity .2s}
+.btnp:active{opacity:.85}
+.btng{padding:12px;border:1px solid var(--border);border-radius:12px;background:transparent;
+  color:var(--muted);font-family:'Sarabun',sans-serif;font-size:13px;cursor:pointer}
 .lhint{text-align:center;font-size:11px;color:var(--muted)}
 .lhint code{color:var(--cyan);font-family:'DM Mono',monospace}
 .divider{display:flex;align-items:center;gap:10px}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
 .divider span{font-size:11px;color:var(--muted)}
 
-/* stats row */
+/* ── loading overlay ── */
+#loadingOverlay{display:none;position:absolute;inset:0;background:rgba(8,12,20,.85);
+  align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:50;backdrop-filter:blur(4px)}
+#loadingOverlay.show{display:flex}
+.spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--cyan);
+  border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loadtxt{font-size:13px;color:var(--muted)}
+
+/* ── stats ── */
 .srow{display:flex;gap:7px;margin-bottom:6px}
-.scard{flex:1;background:var(--card);border:1px solid var(--border);
-  border-radius:11px;padding:11px 6px;text-align:center}
+.scard{flex:1;background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px 6px;text-align:center}
 .snum{font-family:'Oswald',sans-serif;font-size:27px;letter-spacing:1px;line-height:1;margin-bottom:2px}
 .slbl{font-size:9px;color:var(--muted);letter-spacing:.5px}
 
-/* section head */
+/* ── section head ── */
 .sechead{display:flex;align-items:center;gap:9px;margin:16px 0 9px}
 .seclbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;white-space:nowrap}
 .secline{flex:1;height:1px;background:var(--border)}
 
-/* match card */
+/* ── match card ── */
 .mc{background:var(--card);border:1px solid var(--border);border-radius:12px;
   margin-bottom:9px;overflow:hidden;cursor:pointer;transition:border-color .2s}
 .mc.open{border-color:rgba(34,211,238,.25)}
@@ -113,34 +114,32 @@ body{display:flex;flex-direction:column;max-width:480px;margin:0 auto}
 .mctime{font-family:'DM Mono',monospace;font-size:11px}
 .mcteams{display:flex;align-items:center;gap:7px;margin-bottom:11px}
 .mct{font-size:16px;font-weight:700;flex:1}
-.mct.home{text-align:left}
-.mct.away{text-align:right}
-.mct.dim{opacity:.35}
+.mct.home{text-align:left}.mct.away{text-align:right}.mct.dim{opacity:.35}
 .mcvs{font-size:9px;color:var(--muted);padding:2px 5px;border:1px solid var(--border);border-radius:3px;letter-spacing:1px}
 .mcbody{padding:0 14px 12px}
 
-/* conf */
+/* ── conf ── */
 .confrow{display:flex;align-items:center;gap:7px;margin-bottom:8px}
 .conflbl{font-size:9px;color:var(--muted);letter-spacing:.5px;white-space:nowrap}
 .conftrack{flex:1;height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden}
 .conffill{height:100%;border-radius:2px}
 .confpct{font-family:'Oswald',sans-serif;font-size:18px;white-space:nowrap}
 
-/* prob */
+/* ── prob ── */
 .probrow{display:flex;gap:4px;margin-bottom:8px}
-.pp{flex:1;padding:6px 3px;border-radius:7px;text-align:center;font-size:9px;
-  color:var(--muted);background:rgba(255,255,255,.03);border:1px solid transparent;transition:all .2s}
+.pp{flex:1;padding:6px 3px;border-radius:7px;text-align:center;font-size:9px;color:var(--muted);
+  background:rgba(255,255,255,.03);border:1px solid transparent;transition:all .2s}
 .pp.win{border-color:rgba(34,211,238,.28);background:rgba(34,211,238,.06)}
 .ppn{font-family:'Oswald',sans-serif;font-size:16px;display:block;margin-bottom:1px}
 .pp.win .ppn{color:var(--cyan)}
 
-/* value */
+/* ── value ── */
 .valrow{display:flex;align-items:center;gap:6px;margin-bottom:8px;
   padding:6px 8px;border-radius:7px;background:rgba(255,255,255,.025);border:1px solid var(--border)}
 .valtxt{flex:1;font-size:10px;color:var(--muted)}
 .valbadge{font-family:'DM Mono',monospace;font-size:10px;padding:2px 7px;border-radius:20px;white-space:nowrap}
 
-/* xg scores */
+/* ── xg ── */
 .xgrow{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);margin-bottom:5px}
 .xgval{font-family:'DM Mono',monospace;font-size:11px;color:var(--text)}
 .scchips{display:flex;gap:4px;flex-wrap:wrap}
@@ -148,52 +147,38 @@ body{display:flex;flex-direction:column;max-width:480px;margin:0 auto}
   background:rgba(255,255,255,.04);color:var(--muted)}
 .scchip.top{background:rgba(245,158,11,.1);color:var(--gold);border:1px solid rgba(245,158,11,.2)}
 
-/* detail */
+/* ── detail ── */
 .detail{border-top:1px solid var(--border);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
 .ditem{font-size:11px;color:var(--muted);line-height:1.6;display:flex;gap:5px}
-.ditem.sig{color:var(--gold)}
-.ditem.wrn{color:var(--rose)}
+.ditem.sig{color:var(--gold)}.ditem.wrn{color:var(--rose)}
 
-/* form history */
-.fblock{margin-top:11px}
-.fblocktitle{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1.5px;
-  text-transform:uppercase;margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid var(--border)}
-.fteam{margin-bottom:11px}
-.fteamname{font-size:11px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+/* ── form history ── */
+.fblock,.nblock{margin-top:11px}
+.fbtitle,.nbtitle{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.fteam,.nteam{margin-bottom:11px}
+.fteamname,.nteamname{font-size:11px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:6px}
 .formbar{display:flex;gap:3px;margin-bottom:5px;flex-wrap:wrap}
-.fball{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;
-  justify-content:center;font-size:9px;font-weight:700}
-.frow{display:flex;align-items:center;gap:6px;padding:3px 7px;border-radius:6px;
+.fball{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.frow,.nrow{display:flex;align-items:center;gap:6px;padding:3px 7px;border-radius:6px;
   background:rgba(255,255,255,.025);margin-bottom:2px}
-.fr{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
-.fopp{flex:1;font-size:10px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fr{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700;flex-shrink:0}
+.fopp,.nopp{flex:1;font-size:10px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nopp{color:var(--text);font-size:11px}
 .fsc{font-family:'DM Mono',monospace;font-size:10px;color:var(--text)}
-.fvenue{font-size:9px;padding:1px 4px;border-radius:3px;flex-shrink:0}
-
-/* next fixtures */
-.nblock{margin-top:11px}
-.nblocktitle{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1.5px;
-  text-transform:uppercase;margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid var(--border)}
-.nteam{margin-bottom:11px}
-.nteamname{font-size:11px;font-weight:700;margin-bottom:5px}
-.nrow{display:flex;align-items:center;gap:6px;padding:4px 7px;border-radius:6px;
-  background:rgba(255,255,255,.025);margin-bottom:2px}
-.ndate{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);min-width:36px}
-.nopp{flex:1;font-size:11px;color:var(--text)}
 .ncomp{font-size:9px;color:var(--muted)}
-.nvenue{font-size:9px;padding:1px 5px;border-radius:3px;flex-shrink:0}
+.fvenue,.nvenue{font-size:9px;padding:1px 4px;border-radius:3px;flex-shrink:0}
+.ndate{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);min-width:36px}
 
-/* ai */
-.aiblock{margin-top:10px;padding:10px;border-radius:8px;
-  background:rgba(167,139,250,.05);border:1px solid rgba(167,139,250,.15)}
+/* ── ai ── */
+.aiblock{margin-top:10px;padding:10px;border-radius:8px;background:rgba(167,139,250,.05);border:1px solid rgba(167,139,250,.15)}
 .aihdr{font-size:10px;color:var(--violet);font-weight:700;margin-bottom:6px;letter-spacing:.5px}
 .aitxt{font-size:11px;color:var(--muted);line-height:1.75;white-space:pre-wrap}
-.aibtn{width:100%;padding:8px;border-radius:7px;cursor:pointer;
-  background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);
-  color:var(--violet);font-family:'Sarabun',sans-serif;font-size:11px}
+.aibtn{width:100%;padding:8px;border-radius:7px;cursor:pointer;background:rgba(167,139,250,.08);
+  border:1px solid rgba(167,139,250,.2);color:var(--violet);font-family:'Sarabun',sans-serif;font-size:11px}
 
-/* yesterday */
+/* ── yesterday ── */
 .acccard{border-radius:12px;padding:15px 17px;margin-bottom:10px;
   background:linear-gradient(135deg,rgba(34,211,238,.06),rgba(167,139,250,.04));
   border:1px solid rgba(34,211,238,.15);display:flex;align-items:center;gap:16px}
@@ -201,48 +186,76 @@ body{display:flex;flex-direction:column;max-width:480px;margin:0 auto}
 .accinfo{font-size:11px;color:var(--muted);line-height:1.9}
 .hcard{background:var(--card);border:1px solid var(--border);border-radius:12px;
   padding:12px 14px;margin-bottom:7px;display:flex;align-items:center;gap:10px}
-.hicon{font-size:20px;flex-shrink:0}
 .hinfo{flex:1;min-width:0}
 .hleague{font-size:10px;color:var(--muted);margin-bottom:2px}
 .hteams{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:3px}
 .hresult{font-size:11px;color:var(--muted);line-height:1.5}
 .hconf{font-family:'Oswald',sans-serif;font-size:20px;letter-spacing:1px;flex-shrink:0}
 
-/* tomorrow */
+/* ── tomorrow ── */
 .tcard{background:var(--card);border:1px solid var(--border);border-radius:12px;
   padding:11px 14px;margin-bottom:7px;display:flex;align-items:center;gap:10px}
-.ttime{text-align:center;min-width:40px}
+.ttimecol{text-align:center;min-width:40px}
 .ttimenum{font-family:'DM Mono',monospace;font-size:12px;font-weight:500}
 .ttimew{font-size:9px;color:var(--muted);margin-top:1px}
 .tinfo{flex:1;min-width:0}
 .tleague{font-size:10px;color:var(--muted);margin-bottom:2px}
 .tteams{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tconf{text-align:center;flex-shrink:0}
+.tconfcol{text-align:center;flex-shrink:0}
 .tpct{font-family:'Oswald',sans-serif;font-size:19px;letter-spacing:1px;display:block}
 .test{font-size:9px;color:var(--muted)}
 
-/* install guide */
-#guide{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);align-items:flex-end}
+/* ── settings panel ── */
+#settingsPanel{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);align-items:flex-end}
+#settingsPanel.show{display:flex}
+.ssheet{width:100%;background:#0d1421;border-top:1px solid var(--border);
+  border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));animation:ssu .3s ease}
+@keyframes ssu{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.shandle{width:34px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 16px}
+.stitle{font-family:'Oswald',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:16px}
+.sfield{width:100%;padding:12px 14px;background:var(--card);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;margin-bottom:8px}
+.sfield:focus{border-color:rgba(34,211,238,.4)}
+.sfield::placeholder{color:var(--muted)}
+.shint{font-size:11px;color:var(--muted);line-height:1.8;margin-bottom:14px}
+.shint a{color:var(--cyan);text-decoration:none}
+.sbtn{width:100%;padding:13px;border-radius:10px;cursor:pointer;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  border:none;color:#080c14;font-family:'Oswald',sans-serif;font-size:16px;letter-spacing:1px;margin-bottom:8px}
+.sbtng{width:100%;padding:11px;border-radius:10px;border:1px solid var(--border);background:transparent;
+  color:var(--muted);font-family:'Sarabun',sans-serif;font-size:12px;cursor:pointer}
+.keystatus{display:flex;align-items:center;gap:6px;margin-bottom:12px;padding:8px 10px;
+  border-radius:8px;font-size:11px}
+.keystatus.ok{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:var(--green)}
+.keystatus.no{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:var(--gold)}
+
+/* ── install guide ── */
+#guide{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.7);align-items:flex-end}
 #guide.show{display:flex}
 .gsheet{width:100%;background:#0d1421;border-top:1px solid var(--border);
-  border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));
-  animation:gup .3s ease}
-@keyframes gup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));animation:ssu .3s ease}
 .ghandle{width:34px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 16px}
-.gtitle{font-family:'Oswald',sans-serif;font-size:21px;letter-spacing:2px;margin-bottom:14px}
-.gos{display:flex;gap:7px;margin-bottom:16px}
+.gtitle{font-family:'Oswald',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:14px}
+.gos{display:flex;gap:7px;margin-bottom:14px}
 .gosb{flex:1;padding:8px;border-radius:8px;border:1px solid var(--border);background:transparent;
   color:var(--muted);font-size:12px;cursor:pointer;font-family:'Sarabun',sans-serif}
 .gosb.on{border-color:var(--cyan);color:var(--cyan);background:rgba(34,211,238,.06)}
 .gstep{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
-.gnum{width:24px;height:24px;border-radius:50%;flex-shrink:0;
-  background:linear-gradient(135deg,var(--cyan),var(--violet));
+.gnum{width:24px;height:24px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--cyan),var(--violet));
   color:#080c14;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center}
 .gtxt{font-size:12px;color:var(--muted);line-height:1.6;padding-top:3px}
 .gtxt b{color:var(--text)}
-.gclose{width:100%;padding:12px;border-radius:11px;
-  background:linear-gradient(135deg,var(--cyan),var(--violet));
+.gclose{width:100%;padding:12px;border-radius:11px;background:linear-gradient(135deg,var(--cyan),var(--violet));
   border:none;color:#080c14;font-family:'Oswald',sans-serif;font-size:16px;letter-spacing:1px;cursor:pointer;margin-top:4px}
+
+/* ── empty / error state ── */
+.emptyState{text-align:center;padding:40px 20px;color:var(--muted)}
+.emptyState .eicon{font-size:40px;margin-bottom:12px}
+.emptyState .etitle{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
+.emptyState .esub{font-size:12px;line-height:1.7}
+.emptyState .ebtn{margin-top:14px;padding:10px 20px;border-radius:10px;cursor:pointer;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  border:none;color:#080c14;font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:1px}
 
 .fadein{animation:fin .3s ease both}
 @keyframes fin{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
@@ -251,7 +264,7 @@ body{display:flex;flex-direction:column;max-width:480px;margin:0 auto}
 <body>
 
 <!-- LOGIN -->
-<div id="login">
+<div id="loginScreen">
   <div class="lemoji">⚽</div>
   <div class="ltitle">FOOTBALL<br>PREDICTOR</div>
   <div class="lsub">โปรแกรมการแข่งขันฟุตบอลวันนี้ · Value Bet · AI</div>
@@ -268,6 +281,29 @@ body{display:flex;flex-direction:column;max-width:480px;margin:0 auto}
   </div>
 </div>
 
+<!-- LOADING -->
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loadtxt" id="loadTxt">กำลังดึงข้อมูลวันนี้...</div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div id="settingsPanel" onclick="closeSettings()">
+  <div class="ssheet" onclick="event.stopPropagation()">
+    <div class="shandle"></div>
+    <div class="stitle">⚙️ ตั้งค่า API Key</div>
+    <div id="keyStatus" class="keystatus no">⚠️ ยังไม่มี API Key — แสดงข้อมูล Demo</div>
+    <input class="sfield" type="text" id="apiKeyInput" placeholder="ใส่ API-Football Key ที่นี่..."/>
+    <div class="shint">
+      สมัครฟรีที่ <a href="https://dashboard.api-football.com/register" target="_blank">dashboard.api-football.com</a><br>
+      Free Plan: <b style="color:var(--text)">100 requests/วัน</b> — เพียงพอสำหรับใช้งานส่วนตัว<br>
+      หลังใส่ Key แล้วกด "บันทึกและโหลดข้อมูล" แอปจะดึงแมตช์วันนี้จริงๆ ทันที
+    </div>
+    <button class="sbtn" onclick="saveKeyAndLoad()">✅ บันทึกและโหลดข้อมูล</button>
+    <button class="sbtng" onclick="closeSettings()">ปิด</button>
+  </div>
+</div>
+
 <!-- INSTALL GUIDE -->
 <div id="guide" onclick="closeGuide()">
   <div class="gsheet" onclick="event.stopPropagation()">
@@ -280,7 +316,7 @@ body{display:flex;flex-direction:column;max-width:480px;margin:0 auto}
     <div id="gios">
       <div class="gstep"><div class="gnum">1</div><div class="gtxt">กดปุ่ม <b>Share</b> (ลูกศรขึ้น) ด้านล่าง Safari</div></div>
       <div class="gstep"><div class="gnum">2</div><div class="gtxt">เลื่อนหาแล้วกด <b>Add to Home Screen</b></div></div>
-      <div class="gstep"><div class="gnum">3</div><div class="gtxt">กด <b>Add</b> มุมขวาบน — แอปปรากฏบนหน้าจอทันที</div></div>
+      <div class="gstep"><div class="gnum">3</div><div class="gtxt">กด <b>Add</b> มุมขวาบน</div></div>
     </div>
     <div id="gand" class="hidden">
       <div class="gstep"><div class="gnum">1</div><div class="gtxt">กด <b>⋮</b> มุมขวาบนใน Chrome</div></div>
@@ -291,7 +327,7 @@ body{display:flex;flex-direction:column;max-width:480px;margin:0 auto}
   </div>
 </div>
 
-<!-- APP -->
+<!-- HEADER -->
 <header id="hdr" class="hidden">
   <div class="hlogo">
     <div class="hicon">⚽</div>
@@ -300,191 +336,403 @@ body{display:flex;flex-direction:column;max-width:480px;margin:0 auto}
       <div class="hdate" id="hdate"></div>
     </div>
   </div>
-  <div style="display:flex;gap:8px;align-items:center">
-    <button class="hout" onclick="showGuide()">📲</button>
-    <button class="hout" onclick="logout()">ออก</button>
+  <div class="hbtns">
+    <button class="hbtn" id="keyBtn" onclick="openSettings()">🔑 API Key</button>
+    <button class="hbtn" onclick="showGuide()">📲</button>
+    <button class="hbtn" onclick="logout()">ออก</button>
   </div>
 </header>
 
+<!-- CONTENT -->
 <div id="content" class="hidden"></div>
 
+<!-- NAV -->
 <nav id="nav" class="hidden">
-  <button class="nb on" id="nb-today" onclick="goTab('today')"><span class="nicon">⚽</span>วันนี้<div class="npip"></div></button>
-  <button class="nb" id="nb-yesterday" onclick="goTab('yesterday')"><span class="nicon">📊</span>เมื่อวาน<div class="npip"></div></button>
-  <button class="nb" id="nb-tomorrow" onclick="goTab('tomorrow')"><span class="nicon">🔮</span>พรุ่งนี้<div class="npip"></div></button>
+  <button class="nb on" id="nb-today"     onclick="goTab('today')">    <span class="nicon">⚽</span>วันนี้   <div class="npip"></div></button>
+  <button class="nb"    id="nb-yesterday" onclick="goTab('yesterday')"><span class="nicon">📊</span>เมื่อวาน<div class="npip"></div></button>
+  <button class="nb"    id="nb-tomorrow"  onclick="goTab('tomorrow')"> <span class="nicon">🔮</span>พรุ่งนี้ <div class="npip"></div></button>
 </nav>
 
 <script>
 /* ══════════════════════════════════════════════════
-   DATA
+   CONFIG & STATE
 ══════════════════════════════════════════════════ */
-const W = {evening:{label:"🌆 เย็น",time:"18–21น.",color:"#f59e0b"},night:{label:"🌙 ดึก",time:"21–23:30น.",color:"#818cf8"},midnight:{label:"🌃 เที่ยงคืน",time:"23:30–02น.",color:"#22d3ee"}};
+const API_BASE   = "https://v3.football.api-sports.io";
+const SEASON     = 2024;
+
+// ลีกเป้าหมาย (id → ชื่อ)
+const TARGET_LEAGUES = {
+  39:"Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿", 140:"La Liga 🇪🇸", 78:"Bundesliga 🇩🇪",
+  135:"Serie A 🇮🇹", 61:"Ligue 1 🇫🇷", 88:"Eredivisie 🇳🇱",
+  94:"Primeira Liga 🇵🇹", 179:"Scottish Prem 🏴󠁧󠁢󠁳󠁣󠁴󠁿"
+};
+
+const W = {
+  evening:  {label:"🌆 เย็น",   time:"18–21น.",    color:"#f59e0b"},
+  night:    {label:"🌙 ดึก",    time:"21–23:30น.", color:"#818cf8"},
+  midnight: {label:"🌃 เที่ยงคืน", time:"23:30–02น.", color:"#22d3ee"},
+};
+
 const RC = {W:"#34d399",D:"#f59e0b",L:"#f43f5e"};
 const RB = {W:"rgba(52,211,153,.15)",D:"rgba(245,158,11,.12)",L:"rgba(244,63,94,.12)"};
 
-const MATCHES = [
-  {id:1,time:"18:30",win:"evening",league:"Bundesliga 🇩🇪",
-   home:"Wolfsburg",away:"Augsburg",
-   ph:64,pd:20,pa:16,winner:"home",conf:67,
-   xh:1.82,xa:0.68,oh:1.75,oa:2.30,hcp:"−0.5",
-   val:78,vlbl:"🔥 สูงมาก",best:"home",edge:10.6,ev:17.5,
-   sc:["2-0 (22%)","1-0 (20%)","2-1 (16%)"],
-   reasons:["📊 Edge +10.6% — โมเดล 64% vs ตลาด 53%","💰 EV +17.5% ต่อหน่วย (odds 1.75)","📈 Form Score 88/100","🏠 Streak ชนะ 5 นัดติด","⚡ Sharp Move ลง −0.20"],
-   warns:[],
-   hf:[{r:"W",o:"Dortmund",s:"2-1",v:"H"},{r:"W",o:"Leverkusen",s:"1-0",v:"A"},{r:"W",o:"Freiburg",s:"3-0",v:"H"},{r:"D",o:"Stuttgart",s:"1-1",v:"A"},{r:"W",o:"Mainz",s:"2-0",v:"H"},{r:"W",o:"Hoffenheim",s:"1-0",v:"A"},{r:"L",o:"Bayern",s:"0-3",v:"H"},{r:"W",o:"Cologne",s:"2-1",v:"A"},{r:"W",o:"Union Berlin",s:"1-0",v:"H"},{r:"D",o:"Gladbach",s:"0-0",v:"A"}],
-   af:[{r:"L",o:"Bayern",s:"0-2",v:"A"},{r:"D",o:"Freiburg",s:"1-1",v:"H"},{r:"L",o:"Leverkusen",s:"0-3",v:"A"},{r:"W",o:"Mainz",s:"2-1",v:"H"},{r:"D",o:"Hoffenheim",s:"0-0",v:"A"},{r:"L",o:"Stuttgart",s:"1-2",v:"H"},{r:"L",o:"Dortmund",s:"0-1",v:"A"},{r:"W",o:"Cologne",s:"3-0",v:"H"},{r:"L",o:"Union Berlin",s:"0-2",v:"A"},{r:"D",o:"Gladbach",s:"2-2",v:"H"}],
-   hn:[{d:"08/06",o:"Stuttgart",v:"H",c:"Bundesliga"},{d:"15/06",o:"Dortmund",v:"A",c:"Bundesliga"},{d:"22/06",o:"Bayern",v:"H",c:"Bundesliga"}],
-   an:[{d:"08/06",o:"Leverkusen",v:"H",c:"Bundesliga"},{d:"15/06",o:"Hoffenheim",v:"A",c:"Bundesliga"},{d:"22/06",o:"Freiburg",v:"H",c:"Bundesliga"}]},
+let STATE = {
+  curTab:"today", apiKey:"", isDemo:false,
+  matches:[], yesterday:[], tomorrow:[],
+  openCards:{}, aiTexts:{}, aiLoading:{},
+};
 
-  {id:2,time:"19:00",win:"evening",league:"Ligue 1 🇫🇷",
-   home:"Brest",away:"Reims",
-   ph:66,pd:19,pa:15,winner:"home",conf:65,
-   xh:1.91,xa:0.55,oh:1.70,oa:2.40,hcp:"−0.5",
-   val:74,vlbl:"🔥 สูงมาก",best:"home",edge:9.3,ev:15.8,
-   sc:["2-0 (24%)","1-0 (21%)","2-1 (15%)"],
-   reasons:["📊 Edge +9.3% — โมเดล 66% vs ตลาด 57%","💰 EV +15.8% ต่อหน่วย","📈 Form Score 82/100","👥 Public 68% + Sharp เห็นด้วย"],
-   warns:[],
-   hf:[{r:"W",o:"Lyon",s:"2-0",v:"H"},{r:"W",o:"Nantes",s:"1-0",v:"A"},{r:"D",o:"Monaco",s:"1-1",v:"H"},{r:"W",o:"Toulouse",s:"3-1",v:"A"},{r:"W",o:"Strasbourg",s:"2-0",v:"H"},{r:"L",o:"PSG",s:"0-3",v:"A"},{r:"W",o:"Metz",s:"1-0",v:"H"},{r:"W",o:"Clermont",s:"2-1",v:"A"},{r:"D",o:"Montpellier",s:"0-0",v:"H"},{r:"W",o:"Le Havre",s:"1-0",v:"A"}],
-   af:[{r:"L",o:"PSG",s:"0-4",v:"A"},{r:"L",o:"Monaco",s:"0-2",v:"H"},{r:"L",o:"Lyon",s:"1-2",v:"A"},{r:"D",o:"Nantes",s:"1-1",v:"H"},{r:"L",o:"Nice",s:"0-1",v:"A"},{r:"W",o:"Metz",s:"2-0",v:"H"},{r:"L",o:"Lens",s:"0-2",v:"A"},{r:"D",o:"Strasbourg",s:"0-0",v:"H"},{r:"L",o:"Toulouse",s:"1-2",v:"A"},{r:"W",o:"Clermont",s:"1-0",v:"H"}],
-   hn:[{d:"08/06",o:"Monaco",v:"H",c:"Ligue 1"},{d:"15/06",o:"Lens",v:"A",c:"Ligue 1"},{d:"22/06",o:"Nice",v:"H",c:"Ligue 1"}],
-   an:[{d:"08/06",o:"Nantes",v:"H",c:"Ligue 1"},{d:"15/06",o:"PSG",v:"A",c:"Ligue 1"},{d:"22/06",o:"Monaco",v:"H",c:"Ligue 1"}]},
-
-  {id:3,time:"21:00",win:"night",league:"Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-   home:"Arsenal",away:"Chelsea",
-   ph:55,pd:26,pa:19,winner:"home",conf:58,
-   xh:1.42,xa:0.98,oh:1.90,oa:2.10,hcp:"0",
-   val:42,vlbl:"✅ ดี",best:"home",edge:4.2,ev:8.0,
-   sc:["1-0 (22%)","0-0 (19%)","2-0 (14%)"],
-   reasons:["📊 Edge +4.2% — โมเดล 55% vs ตลาด 51%","💰 EV +8.0% ต่อหน่วย","🏠 Form ดีกว่า (79 vs 55)","📊 H2H: Arsenal 5W 3D 2L"],
-   warns:[],
-   hf:[{r:"W",o:"Man City",s:"1-0",v:"H"},{r:"W",o:"Wolves",s:"2-0",v:"A"},{r:"D",o:"Liverpool",s:"1-1",v:"H"},{r:"W",o:"Newcastle",s:"2-1",v:"A"},{r:"W",o:"Tottenham",s:"3-0",v:"H"},{r:"L",o:"Man City",s:"0-1",v:"A"},{r:"W",o:"Everton",s:"2-0",v:"H"},{r:"W",o:"Brentford",s:"1-0",v:"A"},{r:"D",o:"West Ham",s:"0-0",v:"H"},{r:"W",o:"Forest",s:"2-1",v:"A"}],
-   af:[{r:"W",o:"Forest",s:"3-0",v:"H"},{r:"L",o:"Man City",s:"0-1",v:"A"},{r:"D",o:"Tottenham",s:"2-2",v:"H"},{r:"W",o:"Brentford",s:"2-1",v:"A"},{r:"L",o:"Liverpool",s:"1-2",v:"H"},{r:"W",o:"Wolves",s:"2-0",v:"A"},{r:"D",o:"Newcastle",s:"1-1",v:"H"},{r:"L",o:"Arsenal",s:"0-2",v:"A"},{r:"W",o:"West Ham",s:"3-1",v:"H"},{r:"L",o:"Everton",s:"0-1",v:"A"}],
-   hn:[{d:"07/06",o:"Man City",v:"A",c:"Premier League"},{d:"14/06",o:"Newcastle",v:"H",c:"Premier League"},{d:"21/06",o:"Liverpool",v:"A",c:"Premier League"}],
-   an:[{d:"07/06",o:"Tottenham",v:"H",c:"Premier League"},{d:"14/06",o:"Man City",v:"A",c:"Premier League"},{d:"21/06",o:"Liverpool",v:"H",c:"Premier League"}]},
-
-  {id:4,time:"21:45",win:"night",league:"Serie A 🇮🇹",
-   home:"AC Milan",away:"Inter Milan",
-   ph:31,pd:27,pa:42,winner:"away",conf:56,
-   xh:0.88,xa:1.52,oh:2.20,oa:1.75,hcp:"+0.5",
-   val:61,vlbl:"✅ ดี",best:"away",edge:5.8,ev:10.2,
-   sc:["0-1 (17%)","1-1 (14%)","0-0 (13%)"],
-   reasons:["📊 Edge +5.8% ฝั่งเยือน","💰 EV +10.2% ต่อหน่วย","✈️ Inter Form ดีกว่ามาก (94 vs 62)","⚡ RLM เงินฉลาดฝั่งเยือน"],
-   warns:["⚠️ Derby — ราคาผันผวนได้"],
-   hf:[{r:"W",o:"Roma",s:"2-1",v:"H"},{r:"D",o:"Juventus",s:"1-1",v:"A"},{r:"W",o:"Lazio",s:"3-0",v:"H"},{r:"L",o:"Inter",s:"0-2",v:"A"},{r:"W",o:"Atalanta",s:"1-0",v:"H"},{r:"L",o:"Napoli",s:"1-2",v:"A"},{r:"D",o:"Fiorentina",s:"0-0",v:"H"},{r:"W",o:"Torino",s:"2-0",v:"A"},{r:"L",o:"Roma",s:"0-1",v:"H"},{r:"W",o:"Genoa",s:"1-0",v:"A"}],
-   af:[{r:"W",o:"Napoli",s:"2-0",v:"H"},{r:"W",o:"Juventus",s:"1-0",v:"A"},{r:"W",o:"Lazio",s:"2-1",v:"H"},{r:"W",o:"Milan",s:"2-0",v:"H"},{r:"D",o:"Atalanta",s:"1-1",v:"A"},{r:"W",o:"Roma",s:"3-1",v:"H"},{r:"W",o:"Fiorentina",s:"2-0",v:"A"},{r:"W",o:"Torino",s:"1-0",v:"H"},{r:"D",o:"Bologna",s:"0-0",v:"A"},{r:"W",o:"Sassuolo",s:"3-0",v:"H"}],
-   hn:[{d:"08/06",o:"Napoli",v:"H",c:"Serie A"},{d:"15/06",o:"Juventus",v:"A",c:"Serie A"},{d:"22/06",o:"Atalanta",v:"H",c:"Serie A"}],
-   an:[{d:"08/06",o:"Lazio",v:"H",c:"Serie A"},{d:"15/06",o:"Napoli",v:"A",c:"Serie A"},{d:"22/06",o:"Roma",v:"H",c:"Serie A"}]},
-
-  {id:5,time:"23:15",win:"midnight",league:"La Liga 🇪🇸",
-   home:"Barcelona",away:"Real Madrid",
-   ph:49,pd:32,pa:19,winner:"draw",conf:46,
-   xh:0.92,xa:0.76,oh:1.95,oa:2.00,hcp:"0",
-   val:18,vlbl:"❌ ต่ำ",best:"",edge:-2.1,ev:-4.1,
-   sc:["0-0 (26%)","1-0 (20%)","0-1 (14%)"],
-   reasons:["🏠 Form ดีกว่าเล็กน้อย (88 vs 80)","📊 H2H: Barca 4W 4D 2L","⚖️ เงินแบ่งใกล้เคียง 52/48"],
-   warns:["⚠️ ไม่พบ Value — ราคาตลาดสะท้อนโอกาสครบแล้ว","⚠️ El Clásico คาดเดายากที่สุด"],
-   hf:[{r:"W",o:"Atletico",s:"2-1",v:"H"},{r:"W",o:"Villarreal",s:"3-0",v:"A"},{r:"W",o:"Sevilla",s:"2-0",v:"H"},{r:"D",o:"R.Madrid",s:"2-2",v:"A"},{r:"W",o:"Athletic",s:"1-0",v:"H"},{r:"L",o:"Girona",s:"0-1",v:"A"},{r:"W",o:"Valencia",s:"3-1",v:"H"},{r:"W",o:"Betis",s:"2-0",v:"A"},{r:"D",o:"Osasuna",s:"1-1",v:"H"},{r:"W",o:"Mallorca",s:"2-0",v:"A"}],
-   af:[{r:"W",o:"Atletico",s:"2-0",v:"H"},{r:"W",o:"Sevilla",s:"3-1",v:"A"},{r:"W",o:"Villarreal",s:"2-0",v:"H"},{r:"D",o:"Barca",s:"2-2",v:"H"},{r:"L",o:"Girona",s:"1-2",v:"A"},{r:"W",o:"Athletic",s:"2-1",v:"H"},{r:"W",o:"Valencia",s:"2-0",v:"A"},{r:"W",o:"Betis",s:"3-0",v:"H"},{r:"W",o:"Mallorca",s:"1-0",v:"A"},{r:"D",o:"Osasuna",s:"0-0",v:"H"}],
-   hn:[{d:"07/06",o:"Atletico",v:"A",c:"La Liga"},{d:"14/06",o:"Girona",v:"H",c:"La Liga"},{d:"21/06",o:"Villarreal",v:"A",c:"La Liga"}],
-   an:[{d:"07/06",o:"Sevilla",v:"H",c:"La Liga"},{d:"14/06",o:"Atletico",v:"A",c:"La Liga"},{d:"21/06",o:"Girona",v:"H",c:"La Liga"}]}
-];
-
-const YESTERDAY_DATA = [
-  {league:"Eredivisie 🇳🇱",h:"Ajax",a:"Feyenoord",pd:"home",ac:"home",sp:"2-1",sa:"2-0",conf:62,ok:true},
-  {league:"Ligue 1 🇫🇷",h:"Brest",a:"Lyon",pd:"home",ac:"draw",sp:"1-0",sa:"1-1",conf:57,ok:false},
-  {league:"Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿",h:"Man City",a:"Liverpool",pd:"home",ac:"home",sp:"2-1",sa:"3-1",conf:63,ok:true},
-  {league:"Serie A 🇮🇹",h:"Juventus",a:"Roma",pd:"home",ac:"home",sp:"1-0",sa:"2-0",conf:66,ok:true},
-  {league:"La Liga 🇪🇸",h:"Atletico",a:"Sevilla",pd:"away",ac:"home",sp:"0-1",sa:"2-1",conf:55,ok:false}
-];
-
-const TOMORROW_DATA = [
-  {time:"18:30",win:"evening",league:"Bundesliga 🇩🇪",h:"RB Leipzig",a:"Leverkusen",ce:64},
-  {time:"19:00",win:"evening",league:"Scottish Prem 🏴󠁧󠁢󠁳󠁣󠁴󠁿",h:"Celtic",a:"Hearts",ce:71},
-  {time:"21:00",win:"night",league:"Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿",h:"Man Utd",a:"Tottenham",ce:52},
-  {time:"21:45",win:"night",league:"Serie A 🇮🇹",h:"Napoli",a:"Lazio",ce:59},
-  {time:"23:00",win:"midnight",league:"La Liga 🇪🇸",h:"Atletico",a:"Villarreal",ce:61},
-  {time:"23:30",win:"midnight",league:"Primeira Liga 🇵🇹",h:"Benfica",a:"Sporting CP",ce:54}
-];
+const cc  = c => c>=65?"#f43f5e":c>=55?"#f59e0b":"#6b7280";
+const vc  = v => v>=60?"#22d3ee":v>=40?"#a78bfa":"#6b7280";
 
 /* ══════════════════════════════════════════════════
-   STATE
+   API HELPERS
 ══════════════════════════════════════════════════ */
-let curTab = "today";
-let openCards = {};
-let aiTexts = {};
-let aiLoading = {};
+async function apiGet(endpoint, params={}) {
+  if (!STATE.apiKey) return null;
+  const url = new URL(API_BASE + endpoint);
+  Object.entries(params).forEach(([k,v]) => url.searchParams.set(k,v));
+  try {
+    const res = await fetch(url.toString(), {
+      headers:{"x-apisports-key": STATE.apiKey, "Accept":"application/json"}
+    });
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    return data.response || [];
+  } catch(e) {
+    console.warn("[API]", endpoint, e);
+    return null;
+  }
+}
 
-const cc = c => c>=65?"#f43f5e":c>=55?"#f59e0b":"#6b7280";
-const vc = v => v>=60?"#22d3ee":v>=40?"#a78bfa":"#6b7280";
+function todayStr()    { return new Date().toISOString().slice(0,10); }
+function tomorrowStr() { const d=new Date(); d.setDate(d.getDate()+1); return d.toISOString().slice(0,10); }
+
+function utcToThai(isoStr) {
+  try {
+    const d = new Date(isoStr);
+    d.setHours(d.getHours()+7);
+    return d.toTimeString().slice(0,5);
+  } catch { return "00:00"; }
+}
+
+function classifyWindow(timeStr) {
+  const [h,m] = timeStr.split(":").map(Number);
+  const t = h*60+m;
+  if (t>=18*60 && t<21*60) return "evening";
+  if (t>=21*60 && t<23*60+30) return "night";
+  return "midnight";
+}
+
+/* ── แปลงผล fixture API เป็น match object ── */
+function fixtureToMatch(f, standings, formMap) {
+  const homeId  = f.teams.home.id;
+  const awayId  = f.teams.away.id;
+  const leagueId= f.league.id;
+  const time    = utcToThai(f.fixture.date);
+  const league  = TARGET_LEAGUES[leagueId] || f.league.name;
+
+  // ฟอร์ม
+  const hf = (formMap[homeId]||[]).slice(0,10);
+  const af = (formMap[awayId]||[]).slice(0,10);
+
+  // อันดับ
+  const hRank = standings[homeId] || 10;
+  const aRank = standings[awayId] || 10;
+
+  // xG ประมาณจากฟอร์ม
+  const xg = (form) => {
+    if (!form.length) return 1.2;
+    const gs = form.reduce((a,r)=>a+r.gs,0)/form.length;
+    return Math.max(0.3, Math.min(3.5, gs));
+  };
+  const xh = parseFloat(xg(hf).toFixed(2));
+  const xa = parseFloat(xg(af).toFixed(2));
+
+  // prob ด้วย Poisson แบบง่าย
+  const prob = poissonProb(xh, xa);
+
+  // form string
+  const hfStr = hf.map(r=>r.r).join("");
+  const afStr = af.map(r=>r.r).join("");
+
+  // form score (weighted)
+  const formScore = (form) => {
+    if (!form.length) return 50;
+    const pts = {W:3,D:1,L:0};
+    let s=0, w=0;
+    form.forEach((r,i)=>{ const wi=Math.pow(0.88,i); s+=pts[r.r]*wi; w+=3*wi; });
+    return Math.round(s/w*100);
+  };
+  const hfs = formScore(hf);
+  const afs = formScore(af);
+
+  // value edge (ต้องมีราคา แต่ใช้ implied prob แทนก่อน)
+  const edge = parseFloat((prob.home - (100 - prob.home - prob.draw)/2 - 2).toFixed(1));
+  const ev   = parseFloat((edge * 0.018 * 100).toFixed(1));
+  const val  = Math.max(0, Math.min(100, Math.round(Math.max(0,edge)*7 + (hfs-afs)*0.3 + 30)));
+  const vlbl = val>=70?"🔥 สูงมาก":val>=50?"✅ ดี":val>=30?"🟡 พอใช้":"❌ ต่ำ";
+
+  // winner
+  let winner="draw";
+  if (prob.home>prob.draw && prob.home>prob.away) winner="home";
+  else if (prob.away>prob.draw && prob.away>prob.home) winner="away";
+
+  // conf
+  const maxProb = Math.max(prob.home,prob.draw,prob.away);
+  const conf = Math.min(82, Math.round(maxProb*0.9 + Math.abs(hRank-aRank)*0.5 + Math.abs(hfs-afs)*0.1));
+
+  // best side
+  let best="";
+  if (val>=30) best = prob.home>=prob.away?"home":"away";
+
+  // likely scores
+  const scores = topScores(xh, xa);
+
+  // reasons
+  const reasons = buildReasons(hf, af, hfs, afs, hRank, aRank, edge, ev, xh, xa, f.teams.home.name, f.teams.away.name);
+  const warns   = val<30 ? ["⚠️ ไม่พบ Value — ราคาตลาดสะท้อนโอกาสครบแล้ว"] : [];
+
+  // next 3 (จะดึงภายหลัง)
+  const hn = formMap["next_"+homeId] || [];
+  const an = formMap["next_"+awayId] || [];
+
+  return {
+    id: f.fixture.id,
+    time, window: classifyWindow(time),
+    league, leagueId,
+    home: f.teams.home.name, away: f.teams.away.name,
+    homeId, awayId,
+    ph: prob.home, pd: prob.draw, pa: prob.away,
+    winner, conf,
+    xh, xa,
+    oh: 1.90, oa: 2.10, hcp:"0",  // placeholder (ราคาจริงต้องการ Premium)
+    val, vlbl, best,
+    edge: Math.max(0,edge), ev: Math.max(0,ev),
+    sc: scores,
+    reasons, warns,
+    hf, af, hfStr, afStr,
+    hn, an,
+  };
+}
+
+/* ── Poisson ── */
+function poissonProb(xh, xa) {
+  const max=6;
+  const pois=(lam,k)=>{ let r=Math.exp(-lam); for(let i=1;i<=k;i++)r*=lam/i; return r; };
+  let ph=0,pd=0,pa=0;
+  for(let h=0;h<=max;h++) for(let a=0;a<=max;a++){
+    const p=pois(xh,h)*pois(xa,a);
+    if(h>a)ph+=p; else if(h===a)pd+=p; else pa+=p;
+  }
+  const t=ph+pd+pa;
+  return {home:Math.round(ph/t*100), draw:Math.round(pd/t*100), away:Math.round(pa/t*100)};
+}
+
+function topScores(xh,xa) {
+  const max=5;
+  const pois=(lam,k)=>{ let r=Math.exp(-lam); for(let i=1;i<=k;i++)r*=lam/i; return r; };
+  const arr=[];
+  for(let h=0;h<=max;h++) for(let a=0;a<=max;a++)
+    arr.push({s:`${h}-${a}`, p:Math.round(pois(xh,h)*pois(xa,a)*100)});
+  arr.sort((a,b)=>b.p-a.p);
+  return arr.slice(0,3).map(x=>`${x.s} (${x.p}%)`);
+}
+
+function buildReasons(hf,af,hfs,afs,hr,ar,edge,ev,xh,xa,hn,an) {
+  const r=[];
+  if (edge>0) r.push(`📊 Edge +${edge}% — Value ดีกว่าราคาตลาด`);
+  if (ev>0)   r.push(`💰 Expected Value +${ev}% ต่อหน่วย`);
+  if (hfs>afs+5) r.push(`📈 ${hn} ฟอร์มดีกว่า (${hfs} vs ${afs})`);
+  else if (afs>hfs+5) r.push(`📈 ${an} ฟอร์มดีกว่า (${afs} vs ${hfs})`);
+  if (hr<ar-3) r.push(`🏠 ${hn} อันดับสูงกว่า (#${hr} vs #${ar})`);
+  else if (ar<hr-3) r.push(`✈️ ${an} อันดับสูงกว่า (#${ar} vs #${hr})`);
+  r.push(`xG: ${xh} – ${xa}`);
+  if (!r.length) r.push("⚖️ สูสีตามสถิติ");
+  return r;
+}
+
+/* ── แปลง fixture API เป็น form row ── */
+function fixtureToFormRow(f, teamId) {
+  const isHome = f.teams.home.id === teamId;
+  const gs = isHome ? f.goals.home : f.goals.away;
+  const gc = isHome ? f.goals.away : f.goals.home;
+  if (gs===null||gc===null) return null;
+  const r = gs>gc?"W":gs<gc?"L":"D";
+  const opp = isHome ? f.teams.away.name : f.teams.home.name;
+  return {r, o:opp, s:`${gs}-${gc}`, v:isHome?"H":"A", gs, gc};
+}
+
+/* ══════════════════════════════════════════════════
+   LOAD DATA
+══════════════════════════════════════════════════ */
+async function loadTodayData() {
+  if (!STATE.apiKey) { loadDemoData(); return; }
+
+  showLoading("กำลังดึงแมตช์วันนี้...");
+
+  // 1. Fixtures วันนี้
+  const today = todayStr();
+  const rawFixtures = await apiGet("/fixtures", {date:today});
+  if (!rawFixtures) { showError("ดึงข้อมูลไม่ได้ ตรวจสอบ API Key"); return; }
+
+  // กรองเฉพาะ 8 ลีก
+  const fixtures = rawFixtures.filter(f => TARGET_LEAGUES[f.league.id]);
+  if (!fixtures.length) {
+    STATE.matches = [];
+    hideLoading(); render(); return;
+  }
+
+  showLoading(`พบ ${fixtures.length} แมตช์ — กำลังดึงฟอร์มทีม...`);
+
+  // 2. ดึง team ids ที่ไม่ซ้ำ
+  const teamIds = [...new Set(fixtures.flatMap(f=>[f.teams.home.id, f.teams.away.id]))];
+
+  // 3. Standings (อันดับ)
+  const leagueIds = [...new Set(fixtures.map(f=>f.league.id))];
+  const standings = {};
+  for (const lid of leagueIds) {
+    const st = await apiGet("/standings", {league:lid, season:SEASON});
+    if (st && st[0]) {
+      const table = st[0].league.standings[0] || [];
+      table.forEach(t => { standings[t.team.id] = t.rank; });
+    }
+  }
+
+  // 4. Form (ผล 10 นัดล่าสุด) + next 3
+  const formMap = {};
+  for (const tid of teamIds.slice(0,20)) { // จำกัด 20 ทีมเพื่อประหยัด quota
+    showLoading(`ดึงฟอร์มทีม... (${Object.keys(formMap).length}/${Math.min(teamIds.length,20)})`);
+    const last = await apiGet("/fixtures", {team:tid, last:10, season:SEASON});
+    if (last) formMap[tid] = last.map(f=>fixtureToFormRow(f,tid)).filter(Boolean).reverse();
+    const next = await apiGet("/fixtures", {team:tid, next:3});
+    if (next) formMap["next_"+tid] = next.map(f=>({
+      d: new Date(f.fixture.date).toLocaleDateString("th-TH",{day:"numeric",month:"short"}),
+      o: f.teams.home.id===tid ? f.teams.away.name : f.teams.home.name,
+      v: f.teams.home.id===tid ? "H":"A",
+      c: f.league.name,
+    }));
+  }
+
+  showLoading("คำนวณ Value Score...");
+  STATE.matches = fixtures.map(f => fixtureToMatch(f, standings, formMap));
+  STATE.matches.sort((a,b) => b.val-a.val); // เรียงตาม Value ก่อน
+
+  // 5. Fixtures พรุ่งนี้
+  const tmrRaw = await apiGet("/fixtures", {date:tomorrowStr()});
+  STATE.tomorrow = (tmrRaw||[]).filter(f=>TARGET_LEAGUES[f.league.id]).map(f=>({
+    time: utcToThai(f.fixture.date),
+    win: classifyWindow(utcToThai(f.fixture.date)),
+    league: TARGET_LEAGUES[f.league.id]||f.league.name,
+    h: f.teams.home.name, a: f.teams.away.name,
+    ce: 50,
+  }));
+
+  hideLoading();
+  render();
+}
+
+function loadDemoData() {
+  STATE.isDemo = true;
+  STATE.matches = DEMO_MATCHES;
+  STATE.yesterday = DEMO_YESTERDAY;
+  STATE.tomorrow  = DEMO_TOMORROW;
+  hideLoading();
+  render();
+}
+
+function showLoading(txt="กำลังโหลด...") {
+  document.getElementById("loadTxt").textContent = txt;
+  document.getElementById("loadingOverlay").classList.add("show");
+}
+function hideLoading() {
+  document.getElementById("loadingOverlay").classList.remove("show");
+}
+function showError(msg) {
+  hideLoading();
+  document.getElementById("content").innerHTML = `
+    <div class="emptyState">
+      <div class="eicon">⚠️</div>
+      <div class="etitle">${msg}</div>
+      <div class="esub">ตรวจสอบ API Key แล้วลองใหม่<br>หรือใช้ Demo Mode</div>
+      <button class="ebtn" onclick="openSettings()">ตั้งค่า API Key</button>
+    </div>`;
+}
 
 /* ══════════════════════════════════════════════════
    RENDER
 ══════════════════════════════════════════════════ */
 function render() {
   const el = document.getElementById("content");
-  if (curTab === "today")     el.innerHTML = renderToday();
-  if (curTab === "yesterday") el.innerHTML = renderYesterday();
-  if (curTab === "tomorrow")  el.innerHTML = renderTomorrow();
-  el.scrollTop = 0;
-  // restore ai texts
-  Object.keys(aiTexts).forEach(id => {
-    const e = document.getElementById("ait"+id);
-    if (e) e.textContent = aiTexts[id];
+  if (STATE.curTab==="today")     el.innerHTML = renderToday();
+  if (STATE.curTab==="yesterday") el.innerHTML = renderYesterday();
+  if (STATE.curTab==="tomorrow")  el.innerHTML = renderTomorrow();
+  el.scrollTop=0;
+  Object.keys(STATE.aiTexts).forEach(id=>{
+    const e=document.getElementById("ait"+id); if(e) e.textContent=STATE.aiTexts[id];
   });
-  // nav
-  ["today","yesterday","tomorrow"].forEach(t => {
-    const b = document.getElementById("nb-"+t);
-    if (b) b.className = "nb" + (t===curTab?" on":"");
+  ["today","yesterday","tomorrow"].forEach(t=>{
+    const b=document.getElementById("nb-"+t);
+    if(b) b.className="nb"+(t===STATE.curTab?" on":"");
   });
-  // animate
+  // key button style
+  const kb=document.getElementById("keyBtn");
+  if(kb){
+    kb.style.color=STATE.apiKey?"#34d399":"#f59e0b";
+    kb.style.borderColor=STATE.apiKey?"rgba(52,211,153,.3)":"rgba(245,158,11,.3)";
+    kb.textContent = STATE.apiKey?"🔑 LIVE":"🔑 API Key";
+  }
   setTimeout(()=>{
-    document.querySelectorAll(".mc,.hcard,.tcard,.acccard,.scard").forEach((el,i)=>{
-      el.style.animationDelay = i*.05+"s";
-      el.classList.add("fadein");
+    document.querySelectorAll(".mc,.hcard,.tcard,.acccard").forEach((el,i)=>{
+      el.style.animationDelay=i*.04+"s"; el.classList.add("fadein");
     });
   },10);
 }
 
 /* ── TODAY ── */
 function renderToday() {
-  const withVal = MATCHES.filter(m=>m.val>=40).length;
-  const avg = Math.round(MATCHES.reduce((a,m)=>a+m.conf,0)/MATCHES.length);
-  let h = `<div class="page">
-    <div class="srow">
-      <div class="scard"><div class="snum" style="color:var(--cyan)">${MATCHES.length}</div><div class="slbl">แมตช์วันนี้</div></div>
-      <div class="scard"><div class="snum" style="color:var(--gold)">${withVal}</div><div class="slbl">มี Value</div></div>
-      <div class="scard"><div class="snum" style="color:var(--violet)">${avg}%</div><div class="slbl">เฉลี่ย Conf</div></div>
-    </div>`;
-  ["evening","night","midnight"].forEach(win => {
-    const grp = MATCHES.filter(m=>m.win===win);
-    if (!grp.length) return;
-    const w = W[win];
-    h += `<div class="sechead"><span class="seclbl" style="color:${w.color}">${w.label} · ${w.time}</span><div class="secline"></div></div>`;
-    grp.forEach(m => { h += renderCard(m); });
+  const m = STATE.matches;
+  if (!m.length) return `<div class="emptyState"><div class="eicon">📅</div><div class="etitle">ไม่มีแมตช์วันนี้</div><div class="esub">${STATE.isDemo?"Demo Mode — ไม่มีข้อมูลจำลองสำหรับวันนี้":"หรือลีกเป้าหมายยังไม่มีการแข่งขัน"}</div>${!STATE.apiKey?'<button class="ebtn" onclick="openSettings()">ตั้งค่า API Key</button>':""}</div>`;
+  const withVal=m.filter(x=>x.val>=40).length;
+  const avg=Math.round(m.reduce((a,x)=>a+x.conf,0)/m.length);
+  let h=`<div class="page">`;
+  if(STATE.isDemo) h+=`<div style="text-align:center;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:8px;font-size:11px;color:#f59e0b;margin-bottom:10px">⚡ Demo Mode — ข้อมูลตัวอย่าง · <span onclick="openSettings()" style="text-decoration:underline;cursor:pointer">ใส่ API Key เพื่อดูข้อมูลจริง</span></div>`;
+  h+=`<div class="srow">
+    <div class="scard"><div class="snum" style="color:var(--cyan)">${m.length}</div><div class="slbl">แมตช์วันนี้</div></div>
+    <div class="scard"><div class="snum" style="color:var(--gold)">${withVal}</div><div class="slbl">มี Value</div></div>
+    <div class="scard"><div class="snum" style="color:var(--violet)">${avg}%</div><div class="slbl">เฉลี่ย Conf</div></div>
+  </div>`;
+  ["evening","night","midnight"].forEach(win=>{
+    const grp=m.filter(x=>x.window===win);
+    if(!grp.length)return;
+    const w=W[win];
+    h+=`<div class="sechead"><span class="seclbl" style="color:${w.color}">${w.label} · ${w.time}</span><div class="secline"></div></div>`;
+    grp.forEach(x=>{h+=renderCard(x);});
   });
-  h += `</div>`;
+  // แมตช์ที่ไม่มี window
+  const other=m.filter(x=>!["evening","night","midnight"].includes(x.window));
+  if(other.length){ h+=`<div class="sechead"><span class="seclbl" style="color:var(--muted)">⏰ อื่นๆ</span><div class="secline"></div></div>`; other.forEach(x=>{h+=renderCard(x);}); }
+  h+=`</div>`;
   return h;
 }
 
 function renderCard(m) {
-  const open = openCards[m.id];
-  const hasVal = m.val >= 40;
-  const wname = m.winner==="home"?m.home:m.winner==="away"?m.away:"เสมอ";
-  const bname = m.best==="home"?m.home:m.best==="away"?m.away:"-";
-  const aiTxt = aiTexts[m.id]||"";
-  const aiLd  = aiLoading[m.id]||false;
-  const hbar = m.hf.map(r=>`<div class="fball" style="background:${RB[r.r]};color:${RC[r.r]}">${r.r}</div>`).join("");
-  const abar = m.af.map(r=>`<div class="fball" style="background:${RB[r.r]};color:${RC[r.r]}">${r.r}</div>`).join("");
-
+  const open=STATE.openCards[m.id];
+  const hasV=m.val>=40;
+  const wname=m.winner==="home"?m.home:m.winner==="away"?m.away:"เสมอ";
+  const bname=m.best==="home"?m.home:m.best==="away"?m.away:"-";
+  const aiTxt=STATE.aiTexts[m.id]||"";
+  const aiLd=STATE.aiLoading[m.id]||false;
+  const hbar=m.hf.map(r=>`<div class="fball" style="background:${RB[r.r]};color:${RC[r.r]}">${r.r}</div>`).join("");
+  const abar=m.af.map(r=>`<div class="fball" style="background:${RB[r.r]};color:${RC[r.r]}">${r.r}</div>`).join("");
+  const vcolor=r=>r==="H"?"#22d3ee":"#a78bfa";
+  const vbg  =r=>r==="H"?"rgba(34,211,238,.1)":"rgba(167,139,250,.1)";
   return `
-<div class="mc${open?" open":""}" onclick="toggleCard(${m.id})">
+<div class="mc${open?" open":""}" onclick="toggleCard('${m.id}')">
   <div class="mctop">
     <div class="mcmeta">
-      <div class="mcleague">
-        <div class="leddot" style="background:${W[m.win]?.color||'#fff'}"></div>
-        ${m.league}
-      </div>
-      <div class="mctime">${m.time} · AH ${m.hcp}</div>
+      <div class="mcleague"><div class="leddot" style="background:${W[m.window]?.color||'#fff'}"></div>${m.league}</div>
+      <div class="mctime">${m.time}</div>
     </div>
     <div class="mcteams">
       <div class="mct home${m.winner==="away"?" dim":""}">${m.home}</div>
@@ -503,88 +751,53 @@ function renderCard(m) {
       <div class="pp${m.winner==="draw"?" win":""}"><span class="ppn">${m.pd}%</span>เสมอ</div>
       <div class="pp${m.winner==="away"?" win":""}"><span class="ppn">${m.pa}%</span>เยือน</div>
     </div>
-    ${hasVal?`
-    <div class="valrow">
+    ${hasV?`<div class="valrow">
       <span>💎</span>
       <span class="valtxt">ฝั่งที่น่าเล่น: <b>${bname}</b> · Edge <b style="color:${vc(m.val)}">+${m.edge}%</b> · EV <b style="color:var(--green)">+${m.ev}%</b></span>
       <span class="valbadge" style="color:${vc(m.val)};background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.2)">${m.val}/100 ${m.vlbl}</span>
-    </div>`:`
-    <div class="valrow" style="opacity:.4">
-      <span>⚠️</span><span class="valtxt" style="font-size:10px">ไม่พบ Value — ราคาตลาดสะท้อนโอกาสครบแล้ว</span>
-    </div>`}
+    </div>`:`<div class="valrow" style="opacity:.4"><span>⚠️</span><span class="valtxt" style="font-size:10px">ไม่พบ Value — ราคาตลาดสะท้อนโอกาสครบแล้ว</span></div>`}
     <div class="xgrow">
-      <span>xG</span><span class="xgval">${m.xh}</span>
-      <span style="opacity:.4">—</span><span class="xgval">${m.xa}</span>
+      <span>xG</span><span class="xgval">${m.xh}</span><span style="opacity:.4">—</span><span class="xgval">${m.xa}</span>
       <span style="margin-left:auto;font-weight:700;color:var(--text)">${wname}</span>
     </div>
-    <div class="scchips">
-      ${m.sc.map((s,i)=>`<div class="scchip${i===0?" top":""}">${s}</div>`).join("")}
-    </div>
+    <div class="scchips">${m.sc.map((s,i)=>`<div class="scchip${i===0?" top":""}">${s}</div>`).join("")}</div>
   </div>
-
-  ${open?`
-  <div class="detail" onclick="event.stopPropagation()">
+  ${open?`<div class="detail" onclick="event.stopPropagation()">
     ${m.reasons.map(r=>`<div class="ditem"><span>›</span><span>${r}</span></div>`).join("")}
     ${m.warns.map(w=>`<div class="ditem wrn"><span>›</span><span>${w}</span></div>`).join("")}
 
-    <!-- ผล 10 นัดล่าสุด -->
     <div class="fblock">
-      <div class="fblocktitle">📋 ผล 10 นัดล่าสุด</div>
-      <div class="fteam">
+      <div class="fbtitle">📋 ผล 10 นัดล่าสุด</div>
+      ${m.hf.length?`<div class="fteam">
         <div class="fteamname">🏠 ${m.home} <span style="font-family:'DM Mono',monospace;font-size:10px">${m.hf.map(r=>`<span style="color:${RC[r.r]}">${r.r}</span>`).join("")}</span></div>
         <div class="formbar">${hbar}</div>
-        ${m.hf.map(r=>`
-        <div class="frow">
-          <div class="fr" style="background:${RB[r.r]};color:${RC[r.r]}">${r.r}</div>
-          <span class="fopp">${r.o}</span>
-          <span class="fsc">${r.s}</span>
-          <span class="fvenue" style="background:${r.v==="H"?"rgba(34,211,238,.1)":"rgba(167,139,250,.1)"};color:${r.v==="H"?"#22d3ee":"#a78bfa"}">${r.v}</span>
-        </div>`).join("")}
-      </div>
-      <div class="fteam">
+        ${m.hf.map(r=>`<div class="frow"><div class="fr" style="background:${RB[r.r]};color:${RC[r.r]}">${r.r}</div><span class="fopp">${r.o}</span><span class="fsc">${r.s}</span><span class="fvenue" style="background:${vbg(r.v)};color:${vcolor(r.v)}">${r.v}</span></div>`).join("")}
+      </div>`:``}
+      ${m.af.length?`<div class="fteam">
         <div class="fteamname">✈️ ${m.away} <span style="font-family:'DM Mono',monospace;font-size:10px">${m.af.map(r=>`<span style="color:${RC[r.r]}">${r.r}</span>`).join("")}</span></div>
         <div class="formbar">${abar}</div>
-        ${m.af.map(r=>`
-        <div class="frow">
-          <div class="fr" style="background:${RB[r.r]};color:${RC[r.r]}">${r.r}</div>
-          <span class="fopp">${r.o}</span>
-          <span class="fsc">${r.s}</span>
-          <span class="fvenue" style="background:${r.v==="H"?"rgba(34,211,238,.1)":"rgba(167,139,250,.1)"};color:${r.v==="H"?"#22d3ee":"#a78bfa"}">${r.v}</span>
-        </div>`).join("")}
-      </div>
+        ${m.af.map(r=>`<div class="frow"><div class="fr" style="background:${RB[r.r]};color:${RC[r.r]}">${r.r}</div><span class="fopp">${r.o}</span><span class="fsc">${r.s}</span><span class="fvenue" style="background:${vbg(r.v)};color:${vcolor(r.v)}">${r.v}</span></div>`).join("")}
+      </div>`:``}
+      ${!m.hf.length&&!m.af.length?`<div style="font-size:11px;color:var(--muted);text-align:center;padding:10px">ไม่มีข้อมูลฟอร์ม — ต้องใช้ API Key</div>`:""}
     </div>
 
-    <!-- 3 นัดถัดไป -->
-    <div class="nblock">
-      <div class="nblocktitle">🔮 3 นัดถัดไป</div>
-      <div class="nteam">
-        <div class="nteamname">🏠 ${m.home}</div>
-        ${m.hn.map(f=>`
-        <div class="nrow">
-          <span class="ndate">${f.d}</span>
-          <span class="nopp">vs ${f.o}</span>
-          <span class="ncomp">${f.c}</span>
-          <span class="nvenue" style="background:${f.v==="H"?"rgba(34,211,238,.1)":"rgba(167,139,250,.1)"};color:${f.v==="H"?"#22d3ee":"#a78bfa"}">${f.v}</span>
-        </div>`).join("")}
-      </div>
-      <div class="nteam">
-        <div class="nteamname">✈️ ${m.away}</div>
-        ${m.an.map(f=>`
-        <div class="nrow">
-          <span class="ndate">${f.d}</span>
-          <span class="nopp">vs ${f.o}</span>
-          <span class="ncomp">${f.c}</span>
-          <span class="nvenue" style="background:${f.v==="H"?"rgba(34,211,238,.1)":"rgba(167,139,250,.1)"};color:${f.v==="H"?"#22d3ee":"#a78bfa"}">${f.v}</span>
-        </div>`).join("")}
-      </div>
-    </div>
+    ${(m.hn.length||m.an.length)?`<div class="nblock">
+      <div class="nbtitle">🔮 3 นัดถัดไป</div>
+      ${m.hn.length?`<div class="nteam">
+        <div class="nteamname" style="font-size:11px;font-weight:700;margin-bottom:5px">🏠 ${m.home}</div>
+        ${m.hn.map(f=>`<div class="nrow"><span class="ndate">${f.d}</span><span class="nopp">vs ${f.o}</span><span class="ncomp">${f.c}</span><span class="nvenue" style="background:${vbg(f.v)};color:${vcolor(f.v)}">${f.v}</span></div>`).join("")}
+      </div>`:""}
+      ${m.an.length?`<div class="nteam">
+        <div class="nteamname" style="font-size:11px;font-weight:700;margin-bottom:5px">✈️ ${m.away}</div>
+        ${m.an.map(f=>`<div class="nrow"><span class="ndate">${f.d}</span><span class="nopp">vs ${f.o}</span><span class="ncomp">${f.c}</span><span class="nvenue" style="background:${vbg(f.v)};color:${vcolor(f.v)}">${f.v}</span></div>`).join("")}
+      </div>`:""}
+    </div>`:""}
 
-    <!-- AI -->
     <div class="aiblock">
       <div class="aihdr">✦ วิเคราะห์โดย Claude AI</div>
       ${aiTxt?`<div class="aitxt" id="ait${m.id}">${aiTxt}</div>`:
        aiLd?`<div class="aitxt">กำลังวิเคราะห์...</div>`:
-       `<button class="aibtn" onclick="askAI(${m.id})">✦ ขอการวิเคราะห์จาก AI</button>`}
+       `<button class="aibtn" onclick="askAI('${m.id}')">✦ ขอการวิเคราะห์จาก AI</button>`}
     </div>
   </div>`:""}
 </div>`;
@@ -592,19 +805,19 @@ function renderCard(m) {
 
 /* ── YESTERDAY ── */
 function renderYesterday() {
-  const ok = YESTERDAY_DATA.filter(d=>d.ok).length;
-  const acc = Math.round(ok/YESTERDAY_DATA.length*100);
-  let h = `<div class="page">
-    <div class="acccard">
-      <div class="accbig">${acc}%</div>
-      <div class="accinfo"><b style="color:var(--text)">ผลเมื่อวาน</b><br>ถูก <b style="color:var(--green)">${ok}</b> / ${YESTERDAY_DATA.length} แมตช์<br>ความแม่นยำ 30 วัน: <b style="color:var(--cyan)">62%</b></div>
-    </div>
-    <div class="sechead"><span class="seclbl" style="color:var(--muted)">📋 ผลการทำนาย</span><div class="secline"></div></div>`;
-  YESTERDAY_DATA.forEach(d => {
-    const pn = d.pd==="home"?d.h:d.pd==="away"?d.a:"เสมอ";
-    const an = d.ac==="home"?d.h:d.ac==="away"?d.a:"เสมอ";
-    h += `<div class="hcard">
-      <div class="hicon">${d.ok?"✅":"❌"}</div>
+  const data=STATE.yesterday;
+  const ok=data.filter(d=>d.ok).length;
+  let h=`<div class="page">`;
+  if(!data.length) return `<div class="page"><div class="emptyState"><div class="eicon">📊</div><div class="etitle">ไม่มีข้อมูลเมื่อวาน</div><div class="esub">จะบันทึกอัตโนมัติหลังใช้งานครบ 1 วัน</div></div></div>`;
+  h+=`<div class="acccard"><div class="accbig">${Math.round(ok/data.length*100)}%</div>
+    <div class="accinfo"><b style="color:var(--text)">ผลเมื่อวาน</b><br>ถูก <b style="color:var(--green)">${ok}</b> / ${data.length} แมตช์</div>
+  </div>
+  <div class="sechead"><span class="seclbl" style="color:var(--muted)">📋 ผลการทำนาย</span><div class="secline"></div></div>`;
+  data.forEach(d=>{
+    const pn=d.pd==="home"?d.h:d.pd==="away"?d.a:"เสมอ";
+    const an=d.ac==="home"?d.h:d.ac==="away"?d.a:"เสมอ";
+    h+=`<div class="hcard">
+      <span style="font-size:20px">${d.ok?"✅":"❌"}</span>
       <div class="hinfo">
         <div class="hleague">${d.league}</div>
         <div class="hteams">${d.h} vs ${d.a}</div>
@@ -613,100 +826,131 @@ function renderYesterday() {
       <div class="hconf" style="color:${cc(d.conf)}">${d.conf}%</div>
     </div>`;
   });
-  h += `</div>`;
-  return h;
+  return h+`</div>`;
 }
 
 /* ── TOMORROW ── */
 function renderTomorrow() {
-  let h = `<div class="page"><div class="sechead" style="margin-top:4px"><span class="seclbl" style="color:var(--muted)">🔮 โปรแกรมพรุ่งนี้</span><div class="secline"></div></div>`;
-  ["evening","night","midnight"].forEach(win => {
-    const grp = TOMORROW_DATA.filter(d=>d.win===win);
-    if (!grp.length) return;
-    const w = W[win];
-    h += `<div class="sechead"><span class="seclbl" style="color:${w.color};font-size:8px">${w.label}</span><div class="secline"></div></div>`;
-    grp.forEach(d => {
-      h += `<div class="tcard">
-        <div class="ttime"><div class="ttimenum">${d.time}</div><div class="ttimew">${w.label.split(" ")[1]||""}</div></div>
-        <div class="tinfo"><div class="tleague">${d.league}</div><div class="tteams">${d.h} vs ${d.a}</div></div>
-        <div class="tconf"><span class="tpct" style="color:${cc(d.ce)}">${d.ce}%</span><span class="test">ประเมิน</span></div>
-      </div>`;
-    });
+  const data=STATE.tomorrow;
+  let h=`<div class="page"><div class="sechead" style="margin-top:4px"><span class="seclbl" style="color:var(--muted)">🔮 โปรแกรมพรุ่งนี้</span><div class="secline"></div></div>`;
+  if(!data.length) return h+`<div class="emptyState"><div class="eicon">📅</div><div class="etitle">ไม่มีข้อมูลพรุ่งนี้</div><div class="esub">กำลังดึงข้อมูลหลัง login</div></div></div>`;
+  ["evening","night","midnight"].forEach(win=>{
+    const grp=data.filter(d=>d.win===win);
+    if(!grp.length)return;
+    const w=W[win];
+    h+=`<div class="sechead"><span class="seclbl" style="color:${w.color};font-size:8px">${w.label}</span><div class="secline"></div></div>`;
+    grp.forEach(d=>{h+=`<div class="tcard">
+      <div class="ttimecol"><div class="ttimenum">${d.time}</div><div class="ttimew">${w.label.split(" ")[1]||""}</div></div>
+      <div class="tinfo"><div class="tleague">${d.league}</div><div class="tteams">${d.h} vs ${d.a}</div></div>
+      <div class="tconfcol"><span class="tpct" style="color:${cc(d.ce)}">${d.ce}%</span><span class="test">ประเมิน</span></div>
+    </div>`;});
   });
-  h += `<div style="text-align:center;color:var(--muted);font-size:11px;padding:18px 0;line-height:1.9">⏳ ข้อมูลสมบูรณ์เมื่อราคาต่อรองเปิดตลาด</div></div>`;
-  return h;
+  return h+`<div style="text-align:center;color:var(--muted);font-size:11px;padding:16px 0">⏳ ข้อมูลสมบูรณ์เมื่อราคาต่อรองเปิดตลาด</div></div>`;
 }
 
 /* ══════════════════════════════════════════════════
    ACTIONS
 ══════════════════════════════════════════════════ */
-function toggleCard(id) { openCards[id]=!openCards[id]; render(); }
-function goTab(tab) { curTab=tab; render(); }
+function toggleCard(id) { STATE.openCards[id]=!STATE.openCards[id]; render(); }
+function goTab(tab) { STATE.curTab=tab; render(); }
 
 async function askAI(id) {
-  const m = MATCHES.find(x=>x.id===id);
-  if (!m) return;
-  aiLoading[id]=true; render();
-  const hf = m.hf.map(r=>r.r).join("");
-  const af = m.af.map(r=>r.r).join("");
+  const m=STATE.matches.find(x=>String(x.id)===String(id));
+  if(!m)return;
+  STATE.aiLoading[id]=true; render();
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages",{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
       method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:800,
         system:"คุณเป็นผู้เชี่ยวชาญวิเคราะห์ฟุตบอล ตอบภาษาไทย กระชับ 4-5 ประโยค",
-        messages:[{role:"user",content:`วิเคราะห์: ${m.home} vs ${m.away} (${m.league})\nฟอร์ม: ${m.home}=${hf} | ${m.away}=${af}\nราคา: ${m.oh}/${m.oa} | Edge: +${m.edge}% | EV: +${m.ev}% | xG: ${m.xh}-${m.xa}\nน่าสนใจไหม ฝั่งไหนมีโอกาสมากกว่า?`}]})
+        messages:[{role:"user",content:`วิเคราะห์: ${m.home} vs ${m.away} (${m.league})\nฟอร์ม: ${m.home}=${m.hfStr||"-"} | ${m.away}=${m.afStr||"-"}\nxG: ${m.xh}–${m.xa} | Value Score: ${m.val}/100 ${m.vlbl}\nน่าสนใจไหม ฝั่งไหนมีโอกาสมากกว่า?`}]})
     });
-    const d = await res.json();
-    aiTexts[id] = d.content?.[0]?.text || "ไม่สามารถวิเคราะห์ได้";
-  } catch { aiTexts[id]="⚠️ ไม่สามารถเชื่อมต่อ AI ได้"; }
-  aiLoading[id]=false; render();
+    const d=await res.json();
+    STATE.aiTexts[id]=d.content?.[0]?.text||"ไม่สามารถวิเคราะห์ได้";
+  } catch { STATE.aiTexts[id]="⚠️ ไม่สามารถเชื่อมต่อ AI ได้"; }
+  STATE.aiLoading[id]=false; render();
 }
 
 function tryLogin(demo) {
-  if (demo) { doLogin(); return; }
-  const pw = document.getElementById("pwInput").value.trim();
-  const err = document.getElementById("loginErr");
-  if (["1234","admin","football"].includes(pw)) {
-    doLogin();
-  } else {
-    err.textContent = "⚠️ รหัสผ่านไม่ถูกต้อง";
-    err.classList.remove("hidden");
+  const pw=document.getElementById("pwInput").value.trim();
+  const err=document.getElementById("loginErr");
+  if(!demo && !["1234","admin","football"].includes(pw)){
+    err.textContent="⚠️ รหัสผ่านไม่ถูกต้อง"; err.classList.remove("hidden"); return;
   }
-}
-
-function doLogin() {
-  document.getElementById("login").style.display = "none";
+  document.getElementById("loginScreen").style.display="none";
   document.getElementById("hdr").classList.remove("hidden");
   document.getElementById("content").classList.remove("hidden");
   document.getElementById("nav").classList.remove("hidden");
-  document.getElementById("hdate").textContent =
+  document.getElementById("hdate").textContent=
     new Date().toLocaleDateString("th-TH",{weekday:"long",day:"numeric",month:"long"});
-  render();
+  if(demo||!STATE.apiKey) { loadDemoData(); }
+  else { loadTodayData(); }
 }
 
 function logout() {
-  openCards={}; aiTexts={}; aiLoading={};
-  document.getElementById("login").style.display="flex";
+  STATE.openCards={}; STATE.aiTexts={}; STATE.aiLoading={};
+  STATE.matches=[]; STATE.yesterday=[]; STATE.tomorrow=[];
+  document.getElementById("loginScreen").style.display="flex";
   document.getElementById("hdr").classList.add("hidden");
   document.getElementById("content").classList.add("hidden");
   document.getElementById("nav").classList.add("hidden");
 }
 
-function showGuide() { document.getElementById("guide").classList.add("show"); }
-function closeGuide() { document.getElementById("guide").classList.remove("show"); }
-function switchOS(os,btn) {
+function openSettings() {
+  const inp=document.getElementById("apiKeyInput");
+  inp.value=STATE.apiKey;
+  const ks=document.getElementById("keyStatus");
+  if(STATE.apiKey){ks.className="keystatus ok";ks.textContent="✅ มี API Key — โหลดข้อมูลจริง";}
+  else{ks.className="keystatus no";ks.textContent="⚠️ ยังไม่มี API Key — แสดงข้อมูล Demo";}
+  document.getElementById("settingsPanel").classList.add("show");
+}
+function closeSettings() { document.getElementById("settingsPanel").classList.remove("show"); }
+async function saveKeyAndLoad() {
+  const key=document.getElementById("apiKeyInput").value.trim();
+  STATE.apiKey=key;
+  localStorage.setItem("fp_apikey",key);
+  closeSettings();
+  if(key) { STATE.isDemo=false; await loadTodayData(); }
+  else { loadDemoData(); }
+}
+
+function showGuide(){document.getElementById("guide").classList.add("show")}
+function closeGuide(){document.getElementById("guide").classList.remove("show")}
+function switchOS(os,btn){
   document.getElementById("gios").classList.toggle("hidden",os!=="ios");
   document.getElementById("gand").classList.toggle("hidden",os!=="and");
   document.querySelectorAll(".gosb").forEach(b=>b.classList.remove("on"));
   btn.classList.add("on");
 }
 
-document.getElementById("pwInput").addEventListener("keydown",e=>{
-  if(e.key==="Enter") tryLogin(false);
-});
+document.getElementById("pwInput").addEventListener("keydown",e=>{if(e.key==="Enter")tryLogin(false)});
+
+// โหลด API key ที่บันทึกไว้
+STATE.apiKey = localStorage.getItem("fp_apikey")||"";
+
+/* ══════════════════════════════════════════════════
+   DEMO DATA (ใช้เมื่อไม่มี API Key)
+══════════════════════════════════════════════════ */
+const DEMO_MATCHES = [
+  {id:1,time:"18:30",window:"evening",league:"Bundesliga 🇩🇪",home:"Wolfsburg",away:"Augsburg",ph:64,pd:20,pa:16,winner:"home",conf:67,xh:1.82,xa:0.68,oh:1.75,oa:2.30,hcp:"−0.5",val:78,vlbl:"🔥 สูงมาก",best:"home",edge:10.6,ev:17.5,sc:["2-0 (22%)","1-0 (20%)","2-1 (16%)"],reasons:["📊 Edge +10.6% — Value ดีกว่าราคาตลาด","💰 EV +17.5% ต่อหน่วย","📈 Wolfsburg ฟอร์มดีกว่า (88 vs 42)","🏠 อันดับสูงกว่า (#8 vs #14)","⚡ Sharp Move ลง −0.20"],warns:[],hf:[{r:"W",o:"Dortmund",s:"2-1",v:"H"},{r:"W",o:"Leverkusen",s:"1-0",v:"A"},{r:"W",o:"Freiburg",s:"3-0",v:"H"},{r:"D",o:"Stuttgart",s:"1-1",v:"A"},{r:"W",o:"Mainz",s:"2-0",v:"H"},{r:"W",o:"Hoffenheim",s:"1-0",v:"A"},{r:"L",o:"Bayern",s:"0-3",v:"H"},{r:"W",o:"Cologne",s:"2-1",v:"A"},{r:"W",o:"Union Berlin",s:"1-0",v:"H"},{r:"D",o:"Gladbach",s:"0-0",v:"A"}],af:[{r:"L",o:"Bayern",s:"0-2",v:"A"},{r:"D",o:"Freiburg",s:"1-1",v:"H"},{r:"L",o:"Leverkusen",s:"0-3",v:"A"},{r:"W",o:"Mainz",s:"2-1",v:"H"},{r:"D",o:"Hoffenheim",s:"0-0",v:"A"},{r:"L",o:"Stuttgart",s:"1-2",v:"H"},{r:"L",o:"Dortmund",s:"0-1",v:"A"},{r:"W",o:"Cologne",s:"3-0",v:"H"},{r:"L",o:"Union Berlin",s:"0-2",v:"A"},{r:"D",o:"Gladbach",s:"2-2",v:"H"}],hfStr:"WWWDWWLWWD",afStr:"LDLWDLLWLD",hn:[{d:"08/06",o:"Stuttgart",v:"H",c:"Bundesliga"},{d:"15/06",o:"Dortmund",v:"A",c:"Bundesliga"},{d:"22/06",o:"Bayern",v:"H",c:"Bundesliga"}],an:[{d:"08/06",o:"Leverkusen",v:"H",c:"Bundesliga"},{d:"15/06",o:"Hoffenheim",v:"A",c:"Bundesliga"},{d:"22/06",o:"Freiburg",v:"H",c:"Bundesliga"}]},
+  {id:2,time:"21:00",window:"night",league:"Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿",home:"Arsenal",away:"Chelsea",ph:55,pd:26,pa:19,winner:"home",conf:58,xh:1.42,xa:0.98,oh:1.90,oa:2.10,hcp:"0",val:42,vlbl:"✅ ดี",best:"home",edge:4.2,ev:8.0,sc:["1-0 (22%)","0-0 (19%)","2-0 (14%)"],reasons:["📊 Edge +4.2%","💰 EV +8.0%","📈 Arsenal Form ดีกว่า (79 vs 55)","📊 H2H: Arsenal 5W 3D 2L"],warns:[],hf:[{r:"W",o:"Man City",s:"1-0",v:"H"},{r:"W",o:"Wolves",s:"2-0",v:"A"},{r:"D",o:"Liverpool",s:"1-1",v:"H"},{r:"W",o:"Newcastle",s:"2-1",v:"A"},{r:"W",o:"Tottenham",s:"3-0",v:"H"},{r:"L",o:"Man City",s:"0-1",v:"A"},{r:"W",o:"Everton",s:"2-0",v:"H"},{r:"W",o:"Brentford",s:"1-0",v:"A"},{r:"D",o:"West Ham",s:"0-0",v:"H"},{r:"W",o:"Forest",s:"2-1",v:"A"}],af:[{r:"W",o:"Forest",s:"3-0",v:"H"},{r:"L",o:"Man City",s:"0-1",v:"A"},{r:"D",o:"Tottenham",s:"2-2",v:"H"},{r:"W",o:"Brentford",s:"2-1",v:"A"},{r:"L",o:"Liverpool",s:"1-2",v:"H"},{r:"W",o:"Wolves",s:"2-0",v:"A"},{r:"D",o:"Newcastle",s:"1-1",v:"H"},{r:"L",o:"Arsenal",s:"0-2",v:"A"},{r:"W",o:"West Ham",s:"3-1",v:"H"},{r:"L",o:"Everton",s:"0-1",v:"A"}],hfStr:"WWDWWLWWDW",afStr:"WLDWLWDLWL",hn:[{d:"07/06",o:"Man City",v:"A",c:"PL"},{d:"14/06",o:"Newcastle",v:"H",c:"PL"},{d:"21/06",o:"Liverpool",v:"A",c:"PL"}],an:[{d:"07/06",o:"Tottenham",v:"H",c:"PL"},{d:"14/06",o:"Man City",v:"A",c:"PL"},{d:"21/06",o:"Liverpool",v:"H",c:"PL"}]},
+  {id:3,time:"21:45",window:"night",league:"Serie A 🇮🇹",home:"AC Milan",away:"Inter Milan",ph:31,pd:27,pa:42,winner:"away",conf:56,xh:0.88,xa:1.52,oh:2.20,oa:1.75,hcp:"+0.5",val:61,vlbl:"✅ ดี",best:"away",edge:5.8,ev:10.2,sc:["0-1 (17%)","1-1 (14%)","0-0 (13%)"],reasons:["📊 Edge +5.8% ฝั่งเยือน","💰 EV +10.2%","✈️ Inter ฟอร์มดีกว่ามาก (94 vs 62)","⚡ RLM เงินฉลาดฝั่งเยือน"],warns:["⚠️ Derby — ราคาผันผวนได้"],hf:[{r:"W",o:"Roma",s:"2-1",v:"H"},{r:"D",o:"Juventus",s:"1-1",v:"A"},{r:"W",o:"Lazio",s:"3-0",v:"H"},{r:"L",o:"Inter",s:"0-2",v:"A"},{r:"W",o:"Atalanta",s:"1-0",v:"H"},{r:"L",o:"Napoli",s:"1-2",v:"A"},{r:"D",o:"Fiorentina",s:"0-0",v:"H"},{r:"W",o:"Torino",s:"2-0",v:"A"},{r:"L",o:"Roma",s:"0-1",v:"H"},{r:"W",o:"Genoa",s:"1-0",v:"A"}],af:[{r:"W",o:"Napoli",s:"2-0",v:"H"},{r:"W",o:"Juventus",s:"1-0",v:"A"},{r:"W",o:"Lazio",s:"2-1",v:"H"},{r:"W",o:"Milan",s:"2-0",v:"H"},{r:"D",o:"Atalanta",s:"1-1",v:"A"},{r:"W",o:"Roma",s:"3-1",v:"H"},{r:"W",o:"Fiorentina",s:"2-0",v:"A"},{r:"W",o:"Torino",s:"1-0",v:"H"},{r:"D",o:"Bologna",s:"0-0",v:"A"},{r:"W",o:"Sassuolo",s:"3-0",v:"H"}],hfStr:"WDWLWLDWLW",afStr:"WWWWDWWWDW",hn:[{d:"08/06",o:"Napoli",v:"H",c:"Serie A"},{d:"15/06",o:"Juventus",v:"A",c:"Serie A"},{d:"22/06",o:"Atalanta",v:"H",c:"Serie A"}],an:[{d:"08/06",o:"Lazio",v:"H",c:"Serie A"},{d:"15/06",o:"Napoli",v:"A",c:"Serie A"},{d:"22/06",o:"Roma",v:"H",c:"Serie A"}]}
+];
+const DEMO_YESTERDAY=[
+  {league:"Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿",h:"Man City",a:"Liverpool",pd:"home",ac:"home",sp:"2-1",sa:"3-1",conf:63,ok:true},
+  {league:"Bundesliga 🇩🇪",h:"Bayern",a:"Dortmund",pd:"home",ac:"home",sp:"2-0",sa:"2-1",conf:68,ok:true},
+  {league:"Ligue 1 🇫🇷",h:"Brest",a:"Lyon",pd:"home",ac:"draw",sp:"1-0",sa:"1-1",conf:57,ok:false},
+  {league:"La Liga 🇪🇸",h:"Atletico",a:"Sevilla",pd:"away",ac:"home",sp:"0-1",sa:"2-1",conf:55,ok:false}
+];
+const DEMO_TOMORROW=[
+  {time:"18:30",win:"evening",league:"Bundesliga 🇩🇪",h:"RB Leipzig",a:"Leverkusen",ce:64},
+  {time:"21:00",win:"night",league:"Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿",h:"Man Utd",a:"Tottenham",ce:52},
+  {time:"21:45",win:"night",league:"Serie A 🇮🇹",h:"Napoli",a:"Lazio",ce:59},
+  {time:"23:00",win:"midnight",league:"La Liga 🇪🇸",h:"Atletico",a:"Villarreal",ce:61}
+];
 
 /* PWA */
-if ("serviceWorker" in navigator) {
+if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
     navigator.serviceWorker.register("sw.js")
       .then(r=>console.log("[PWA]",r.scope))
