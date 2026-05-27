@@ -653,7 +653,7 @@ function selectTop10(matches) {
     return at - bt;
   });
 
-  return picks;
+  return picks.slice(0,10);
 }
 
 async function loadTodayData() {
@@ -730,8 +730,8 @@ async function loadTodayData() {
 
 function loadDemoData() {
   STATE.isDemo = true;
-  STATE.allMatchCount = 0;
-  STATE.matches = DEMO_MATCHES;
+  STATE.allMatchCount = DEMO_MATCHES.length;
+  STATE.matches = selectTop10(DEMO_MATCHES);
   STATE.yesterday = DEMO_YESTERDAY;
   STATE.tomorrow  = DEMO_TOMORROW;
   hideLoading();
